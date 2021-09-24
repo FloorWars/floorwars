@@ -82,7 +82,7 @@ export const NETWORKS = {
     gasPrice: 1000000000,
     rpcUrl: "https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai",
     faucet: "https://faucet.matic.network/",
-    blockExplorer: "https://mumbai-explorer.matic.today/",
+    blockExplorer: "https://mumbai.polygonscan.com/",
   },
   localArbitrum: {
     name: "localArbitrum",

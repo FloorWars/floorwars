@@ -60,19 +60,19 @@ const DEBUG = true;
 const NETWORKCHECK = true;
 
 // 🛰 providers
-if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
+if (DEBUG) console.log("📡 Connecting to Mainnet Mumbai");
 // const mainnetProvider = getDefaultProvider("mainnet", { infura: INFURA_ID, etherscan: ETHERSCAN_KEY, quorum: 1 });
 // const mainnetProvider = new InfuraProvider("mainnet",INFURA_ID);
 //
 // attempt to connect to our own scaffold eth rpc and if that fails fall back to infura...
 // Using StaticJsonRpcProvider as the chainId won't change see https://github.com/ethers-io/ethers.js/issues/901
-const scaffoldEthProvider = navigator.onLine
-  ? new ethers.providers.StaticJsonRpcProvider("https://rpc.scaffoldeth.io:48544")
-  : null;
-const poktMainnetProvider = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406") : null;
-const mainnetInfura = navigator.onLine
-  ? new ethers.providers.StaticJsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID)
-  : null;
+const scaffoldEthProvider = null;
+// navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://rpc.scaffoldeth.io:48544") : null;
+const poktMainnetProvider = null;
+// navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406") : null;
+const mainnetInfura = null;
+ // navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID) : null;
+const mainnetMoralis = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai") : null;
 // ( ⚠️ Getting "failed to meet quorum" errors? Check your INFURA_ID
 
 // 🏠 Your local provider is usually pointed at your local blockchain
@@ -111,6 +111,7 @@ const web3Modal = new Web3Modal({
           1: `https://mainnet.infura.io/v3/${INFURA_ID}`, // mainnet // For more WalletConnect providers: https://docs.walletconnect.org/quick-start/dapps/web3-provider#required
           42: `https://kovan.infura.io/v3/${INFURA_ID}`,
           100: "https://dai.poa.network", // xDai
+          80001: "https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai"
         },
       },
 
@@ -164,12 +165,12 @@ const web3Modal = new Web3Modal({
 });
 
 function App(props) {
-  const mainnetProvider =
-    poktMainnetProvider && poktMainnetProvider._isProvider
-      ? poktMainnetProvider
-      : scaffoldEthProvider && scaffoldEthProvider._network
-      ? scaffoldEthProvider
-      : mainnetInfura;
+  const mainnetProvider = mainnetMoralis;
+    // poktMainnetProvider && poktMainnetProvider._isProvider
+    //   ? poktMainnetProvider
+    //   : scaffoldEthProvider && scaffoldEthProvider._network
+    //   ? scaffoldEthProvider
+    //   : mainnetInfura;
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -490,6 +491,26 @@ function App(props) {
               Mainnet DAI
             </Link>
           </Menu.Item>
+          <Menu.Item key="/mainnetuni">
+            <Link
+              onClick={() => {
+                setRoute("/mainnetuni");
+              }}
+              to="/mainnetuni"
+            >
+              Mainnet UNI
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/mainneterc20">
+            <Link
+              onClick={() => {
+                setRoute("/mainneterc20");
+              }}
+              to="/mainneterc20"
+            >
+              Mainnet ERC20
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -544,16 +565,20 @@ function App(props) {
           </Route>
           <Route path="/mainnetdai">
             <Contract
-              name="LSP"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.LSP}
+              name="DAI"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
               signer={userSigner}
               provider={mainnetProvider}
               address={address}
-              blockExplorer="https://mumbai.polygonscan.com/"
+              blockExplorer="https://etherscan.io"
               contractConfig={contractConfig}
               chainId={80001}
             />
             {/*
+
+            */}
+          </Route>
+          <Route path="/mainnetuni">
             <Contract
               name="UNI"
               customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.UNI}
@@ -561,8 +586,21 @@ function App(props) {
               provider={mainnetProvider}
               address={address}
               blockExplorer="https://etherscan.io/"
+              contractConfig={contractConfig}
+              chainId={1}
             />
-            */}
+          </Route>
+          <Route path="/mainneterc20">
+            <Contract
+              name="ERC20"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.ERC20}
+              signer={userSigner}
+              provider={mainnetProvider}
+              address={address}
+              blockExplorer="https://etherscan.io/"
+              contractConfig={contractConfig}
+              chainId={80001}
+            />
           </Route>
           <Route path="/subgraph">
             <Subgraph
