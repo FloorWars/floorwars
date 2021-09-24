@@ -53,7 +53,7 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.mumbai; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
@@ -544,14 +544,14 @@ function App(props) {
           </Route>
           <Route path="/mainnetdai">
             <Contract
-              name="DAI"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
+              name="LSP"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.LSP}
               signer={userSigner}
               provider={mainnetProvider}
               address={address}
-              blockExplorer="https://etherscan.io/"
+              blockExplorer="https://mumbai.polygonscan.com/"
               contractConfig={contractConfig}
-              chainId={1}
+              chainId={80001}
             />
             {/*
             <Contract
