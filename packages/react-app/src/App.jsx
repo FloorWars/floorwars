@@ -511,6 +511,16 @@ function App(props) {
               Mainnet ERC20
             </Link>
           </Menu.Item>
+          <Menu.Item key="/mainnetlsp">
+            <Link
+              onClick={() => {
+                setRoute("/mainnetlsp");
+              }}
+              to="/mainnetlsp"
+            >
+              Mainnet LSP
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/subgraph">
             <Link
               onClick={() => {
@@ -598,6 +608,18 @@ function App(props) {
               provider={mainnetProvider}
               address={address}
               blockExplorer="https://etherscan.io/"
+              contractConfig={contractConfig}
+              chainId={80001}
+            />
+          </Route>
+          <Route path="/mainnetlsp">
+            <Contract
+              name="LSP"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.LSP}
+              signer={userSigner}
+              provider={mainnetProvider}
+              address={address}
+              blockExplorer="https://mumbai.polygonscan.com/"
               contractConfig={contractConfig}
               chainId={80001}
             />
