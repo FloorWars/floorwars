@@ -67,7 +67,7 @@ async function main() {
 
   await whaleDai.transfer(recipient, whaleDAIBalance.toString());
 
-  await whaleSigner.sendTransaction({to: "0xEA5A52f732BE2eCD218224f896431660FBa8512D", value: hre.ethers.utils.parseEther("6000")});
+  await whaleSigner.sendTransaction({to: recipient.toString(), value: hre.ethers.utils.parseEther("6000")});
 
   const balanceAfterUSDC = await whaleUsdc.balanceOf(recipient);
   console.log("recipient USDC balance is", balanceAfterUSDC.toString());

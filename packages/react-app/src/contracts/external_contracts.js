@@ -1350,7 +1350,7 @@ module.exports = {
         abi: ERC20ABI,
       },
       LSP: {
-        address: "0xD59e311a4433C61A0c3eb71A99f62e51b936cF6e", //Fill me in
+        address: "0x79b6BD0FC723746bC9eAEFeF34613cF4596E6dEF", //Fill me in
         abi: LSPABI,
       }
     }
