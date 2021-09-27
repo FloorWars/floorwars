@@ -1,4 +1,7 @@
 Usage:
+
+From `packages/hardhat` (i.e. `cd packages/hardhat`)
+
 In tab #1:
 
 ```
