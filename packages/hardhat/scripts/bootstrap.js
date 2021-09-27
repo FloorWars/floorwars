@@ -43,23 +43,31 @@ async function main() {
   const whaleUsdc = await usdcContract.connect(whaleSigner);
 
   // The Balance we're gonna steal
-  const whaleBalance = await whaleUsdc.balanceOf(whaleAddress);
-  console.log("whale balance is", whaleBalance.toString());
+  const whaleUSDCBalance = await whaleUsdc.balanceOf(whaleAddress);
+  console.log("whale USDC balance is", whaleUSDCBalance.toString());
+
+  const whaleDAIBalance = await whaleDai.balanceOf(whaleAddress);
+  console.log("whale DAI balance is", whaleDAIBalance.toString());
 
   // The Recipient
   const recipient = "0xdd0c58a610466d5fa54e27817c3433006257bdb2"; // this is philipliao.eth :P
 
   // using the whaleUsdc Contract object because I'm lazy, but I just need a way to do a read only call. sorry for the confusion
-  const balanceBefore = await whaleUsdc.balanceOf(recipient);
-  console.log("recipient balance is", balanceBefore.toString());
+  const balanceBeforeUSDC = await whaleUsdc.balanceOf(recipient);
+  console.log("recipient USDC balance is", balanceBeforeUSDC.toString());
 
-  const transferResult = await whaleUsdc.transfer(
-    recipient,
-    whaleBalance.toString()
-  );
+  const balanceBeforeDAI = await whaleDai.balanceOf(recipient);
+  console.log("recipient DAI balance is", balanceBeforeDAI.toString());
 
-  const balanceAfter = await whaleUsdc.balanceOf(recipient);
-  console.log("recipient balance is", balanceAfter.toString());
+  await whaleUsdc.transfer(recipient, whaleUSDCBalance.toString());
+
+  await whaleDai.transfer(recipient, whaleDAIBalance.toString());
+
+  const balanceAfterUSDC = await whaleUsdc.balanceOf(recipient);
+  console.log("recipient USDC balance is", balanceAfterUSDC.toString());
+
+  const balanceAfterDAI = await whaleDai.balanceOf(recipient);
+  console.log("recipient DAI balance is", balanceAfterDAI.toString());
   console.log(
     "Congrats! You have successfully transferred tokens to yourself!"
   );
