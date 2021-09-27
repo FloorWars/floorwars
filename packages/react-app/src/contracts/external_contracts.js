@@ -1335,4 +1335,20 @@ module.exports = {
       },
     },
   },
+  31337: {
+    contracts: {
+      DAI: {
+        address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+        abi: DAIABI,
+      },
+      USDC: {
+        address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        abi: ERC20ABI,
+      },
+      LSP: {
+        address: "0xD59e311a4433C61A0c3eb71A99f62e51b936cF6e", //Fill me in
+        abi: LSPABI,
+      }
+    }
+  }
 };

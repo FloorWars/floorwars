@@ -50,7 +50,7 @@ async function main() {
   console.log("whale DAI balance is", whaleDAIBalance.toString());
 
   // The Recipient
-  const recipient = "0xdd0c58a610466d5fa54e27817c3433006257bdb2"; // this is philipliao.eth :P
+  const recipient = "0xEA5A52f732BE2eCD218224f896431660FBa8512D"; // this is philipliao.eth :P
 
   // using the whaleUsdc Contract object because I'm lazy, but I just need a way to do a read only call. sorry for the confusion
   const balanceBeforeUSDC = await whaleUsdc.balanceOf(recipient);

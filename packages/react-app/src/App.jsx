@@ -53,14 +53,14 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.mumbai; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
 const NETWORKCHECK = true;
 
 // 🛰 providers
-if (DEBUG) console.log("📡 Connecting to Mainnet Mumbai");
+if (DEBUG) console.log("📡 Connecting to Mainnet forkedETH");
 // const mainnetProvider = getDefaultProvider("mainnet", { infura: INFURA_ID, etherscan: ETHERSCAN_KEY, quorum: 1 });
 // const mainnetProvider = new InfuraProvider("mainnet",INFURA_ID);
 //
@@ -72,7 +72,7 @@ const poktMainnetProvider = null;
 // navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406") : null;
 const mainnetInfura = null;
  // navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID) : null;
-const mainnetMoralis = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai") : null;
+const mainnetMoralis = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("http://localhost:8545") : null;
 // ( ⚠️ Getting "failed to meet quorum" errors? Check your INFURA_ID
 
 // 🏠 Your local provider is usually pointed at your local blockchain
@@ -98,7 +98,7 @@ const walletLinkProvider = walletLink.makeWeb3Provider(`https://mainnet.infura.i
   Web3 modal helps us "connect" external wallets:
 */
 const web3Modal = new Web3Modal({
-  network: "mainnet", // Optional. If using WalletConnect on xDai, change network to "xdai" and add RPC info below for xDai chain.
+  network: "localhost", // Optional. If using WalletConnect on xDai, change network to "xdai" and add RPC info below for xDai chain.
   cacheProvider: true, // optional
   theme: "light", // optional. Change to "dark" for a dark theme.
   providerOptions: {
@@ -111,7 +111,8 @@ const web3Modal = new Web3Modal({
           1: `https://mainnet.infura.io/v3/${INFURA_ID}`, // mainnet // For more WalletConnect providers: https://docs.walletconnect.org/quick-start/dapps/web3-provider#required
           42: `https://kovan.infura.io/v3/${INFURA_ID}`,
           100: "https://dai.poa.network", // xDai
-          80001: "https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai"
+          80001: "https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai",
+          31337: "http://localhost:8545"
         },
       },
 
@@ -582,7 +583,7 @@ function App(props) {
               address={address}
               blockExplorer="https://etherscan.io"
               contractConfig={contractConfig}
-              chainId={80001}
+              chainId={31337}
             />
             {/*
 
@@ -597,19 +598,19 @@ function App(props) {
               address={address}
               blockExplorer="https://etherscan.io/"
               contractConfig={contractConfig}
-              chainId={1}
+              chainId={31337}
             />
           </Route>
           <Route path="/mainneterc20">
             <Contract
-              name="ERC20"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.ERC20}
+              name="USDC"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.USDC}
               signer={userSigner}
               provider={mainnetProvider}
               address={address}
               blockExplorer="https://etherscan.io/"
               contractConfig={contractConfig}
-              chainId={80001}
+              chainId={31337}
             />
           </Route>
           <Route path="/mainnetlsp">
@@ -621,7 +622,7 @@ function App(props) {
               address={address}
               blockExplorer="https://mumbai.polygonscan.com/"
               contractConfig={contractConfig}
-              chainId={80001}
+              chainId={31337}
             />
           </Route>
           <Route path="/subgraph">
