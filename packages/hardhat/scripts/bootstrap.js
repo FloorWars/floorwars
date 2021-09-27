@@ -27,6 +27,7 @@ async function main() {
     erc20Abi
   );
 
+
   // This is Wintermute 1, they're a massive MM that we'll be impersonating
   const whaleAddress = "0x0000006daea1723962647b7e189d311d757fb793";
   const impersonateRes = await hre.network.provider.request({
@@ -49,6 +50,9 @@ async function main() {
   const whaleDAIBalance = await whaleDai.balanceOf(whaleAddress);
   console.log("whale DAI balance is", whaleDAIBalance.toString());
 
+  const whaleEthBalance = await whaleSigner.getBalance();
+  console.log("whale Eth balance is", whaleEthBalance.toString());
+
   // The Recipient
   const recipient = "0xEA5A52f732BE2eCD218224f896431660FBa8512D"; // this is philipliao.eth :P
 
@@ -63,14 +67,21 @@ async function main() {
 
   await whaleDai.transfer(recipient, whaleDAIBalance.toString());
 
+  await whaleSigner.sendTransaction({to: "0xEA5A52f732BE2eCD218224f896431660FBa8512D", value: hre.ethers.utils.parseEther("6000")});
+
   const balanceAfterUSDC = await whaleUsdc.balanceOf(recipient);
   console.log("recipient USDC balance is", balanceAfterUSDC.toString());
 
   const balanceAfterDAI = await whaleDai.balanceOf(recipient);
   console.log("recipient DAI balance is", balanceAfterDAI.toString());
+
+  const balanceAfterEth = await whaleSigner.getBalance();
+  console.log("recipient ETH balance is", balanceAfterEth.toString());
   console.log(
     "Congrats! You have successfully transferred tokens to yourself!"
   );
+
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
