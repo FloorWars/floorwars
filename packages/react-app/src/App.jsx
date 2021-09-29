@@ -53,7 +53,7 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.mumbai; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
@@ -72,7 +72,7 @@ const poktMainnetProvider = null;
 // navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406") : null;
 const mainnetInfura = null;
  // navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://mainnet.infura.io/v3/" + INFURA_ID) : null;
-const mainnetMoralis = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("http://localhost:8545") : null;
+const mainnetMoralis = navigator.onLine ? new ethers.providers.StaticJsonRpcProvider("https://speedy-nodes-nyc.moralis.io/d376b2384f04b47cf322a1c2/polygon/mumbai") : null;
 // ( ⚠️ Getting "failed to meet quorum" errors? Check your INFURA_ID
 
 // 🏠 Your local provider is usually pointed at your local blockchain
@@ -492,24 +492,24 @@ function App(props) {
               Mainnet DAI
             </Link>
           </Menu.Item>
-          <Menu.Item key="/mainnetuni">
+          <Menu.Item key="/mainnetwmatic">
             <Link
               onClick={() => {
-                setRoute("/mainnetuni");
+                setRoute("/mainnetwmatic");
               }}
-              to="/mainnetuni"
+              to="/mainnetwmatic"
             >
-              Mainnet UNI
+              Mumbai WMATIC
             </Link>
           </Menu.Item>
-          <Menu.Item key="/mainneterc20">
+          <Menu.Item key="/mainnetusdc">
             <Link
               onClick={() => {
-                setRoute("/mainneterc20");
+                setRoute("/mainnetusdc");
               }}
-              to="/mainneterc20"
+              to="/mainnetusdc"
             >
-              Mainnet ERC20
+              Mumbai USDC
             </Link>
           </Menu.Item>
           <Menu.Item key="/mainnetlsp">
@@ -519,7 +519,7 @@ function App(props) {
               }}
               to="/mainnetlsp"
             >
-              Mainnet LSP
+              Mumbai LSP
             </Link>
           </Menu.Item>
           <Menu.Item key="/subgraph">
@@ -583,25 +583,25 @@ function App(props) {
               address={address}
               blockExplorer="https://etherscan.io"
               contractConfig={contractConfig}
-              chainId={31337}
+              chainId={80001}
             />
             {/*
 
             */}
           </Route>
-          <Route path="/mainnetuni">
+          <Route path="/mainnetwmatic">
             <Contract
-              name="UNI"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.UNI}
+              name="WMATIC"
+              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.WMATIC}
               signer={userSigner}
               provider={mainnetProvider}
               address={address}
               blockExplorer="https://etherscan.io/"
               contractConfig={contractConfig}
-              chainId={31337}
+              chainId={80001}
             />
           </Route>
-          <Route path="/mainneterc20">
+          <Route path="/mainnetusdc">
             <Contract
               name="USDC"
               customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.USDC}
@@ -610,7 +610,7 @@ function App(props) {
               address={address}
               blockExplorer="https://etherscan.io/"
               contractConfig={contractConfig}
-              chainId={31337}
+              chainId={80001}
             />
           </Route>
           <Route path="/mainnetlsp">
@@ -622,7 +622,7 @@ function App(props) {
               address={address}
               blockExplorer="https://mumbai.polygonscan.com/"
               contractConfig={contractConfig}
-              chainId={31337}
+              chainId={80001}
             />
           </Route>
           <Route path="/subgraph">

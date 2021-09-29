@@ -1321,16 +1321,16 @@ module.exports = {
   },
   80001: {
     contracts: {
-      DAI: {
-        address: "0x001B3B4d0F3714Ca98ba10F6042DaEbF0B1B7b6F",
-        abi: DAIABIMUMBAI,
+      WMATIC: {
+        address: "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
+        abi: ERC20ABI,
       },
-      ERC20: {
-        address: "0x2d7882beDcbfDDce29Ba99965dd3cdF7fcB10A1e",
+      USDC: {
+        address: "0x2058A9D7613eEE744279e3856Ef0eAda5FCbaA7e",
         abi: ERC20ABI,
       },
       LSP: {
-        address: "0xD59e311a4433C61A0c3eb71A99f62e51b936cF6e",
+        address: "0x13Ca6Dd8D890E5043A4912fC218c98c1b72BE350",
         abi: LSPABI,
       },
     },
@@ -1350,7 +1350,11 @@ module.exports = {
         abi: ERC20ABI,
       },
       LSP: {
+<<<<<<< HEAD
         address: "0x79b6BD0FC723746bC9eAEFeF34613cF4596E6dEF", //Fill me in
+=======
+        address: "0xDa141714828DCada0877C946A7C5F30661E43852", //Fill me in
+>>>>>>> ask03
         abi: LSPABI,
       }
     }
