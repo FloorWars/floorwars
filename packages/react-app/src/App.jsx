@@ -489,7 +489,7 @@ function App(props) {
               }}
               to="/mainnetdai"
             >
-              Mainnet DAI
+              Mumbai DAI
             </Link>
           </Menu.Item>
           <Menu.Item key="/mainnetwmatic">
