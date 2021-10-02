@@ -3,6 +3,7 @@ import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState } from "react";
 import { Address, Balance } from "../components";
+import { useContractReader } from "eth-hooks"
 
 export default function BoredPunks({
   address,
@@ -15,6 +16,7 @@ export default function BoredPunks({
   const [longAmount, setLongAmount] = useState(0);
   const [shortAmount, setShortAmount] = useState(0);
 
+
   return (
     <div>
       {/*
@@ -26,6 +28,7 @@ export default function BoredPunks({
         <Divider />
         <div style={{ margin: 8 }}>
           <Input
+            placeholder="Leave empty to mint maximum"
             onChange={e => {
               setNewAmount(e.target.value);
             }}
@@ -34,8 +37,34 @@ export default function BoredPunks({
             style={{ marginTop: 8 }}
             onClick={async () => {
               /* look how you call setPurpose on your contract: */
-              /* notice how you pass a call back for tx updates too */
-              let modAmount = amount * (10**6)
+            /* notice how you pass a call back for tx updates too */
+              let modAmount
+              let colPair = await readContracts.LSP.collateralPerPair()
+              colPair = colPair / (10**12)
+
+
+              if(amount === 0) {
+                let lspAddress = readContracts.LSP.address
+                let newAmount =  await readContracts.USDC.allowance(
+                  address,
+                  lspAddress
+                )
+
+                let balance = await readContracts.USDC.balanceOf(address)
+
+                if(newAmount >= balance) {
+                  modAmount = balance / colPair
+
+                } else {
+                  modAmount = newAmount / colPair
+                }
+
+              } else {
+                modAmount = amount
+              }
+
+              modAmount *= (10**6)
+
               const result = tx(writeContracts.LSP.create(modAmount), update => {
                 console.log("📡 Transaction Update:", update);
                 if (update && (update.status === "confirmed" || update.status === 1)) {
@@ -53,6 +82,7 @@ export default function BoredPunks({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
+              window.location.reload(true)
             }}
           >
             Create Synths!
@@ -82,6 +112,7 @@ export default function BoredPunks({
           </Button>
 
         </div>
+        <span>USDC Balance: </span>
         </div>
 
         <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
