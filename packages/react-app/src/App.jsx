@@ -25,7 +25,7 @@ import {
   useExchangeEthPrice,
 } from "eth-hooks/dapps/dex";
 // import Hints from "./Hints";
-import { ExampleUI, Hints, Subgraph } from "./views";
+import { ExampleUI, Hints, Subgraph, BoredPunks } from "./views";
 
 import { useContractConfig } from "./hooks"
 import Portis from "@portis/web3";
@@ -227,10 +227,10 @@ function App(props) {
   const contractConfig = useContractConfig();
 
   // Load in your local 📝 contract and read a value from it:
-  const readContracts = useContractLoader(localProvider, contractConfig);
+  const readContracts = useContractLoader(mainnetProvider, contractConfig);
 
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
-  const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
+  const writeContracts = useContractLoader(userSigner, contractConfig, '80001');
 
   // EXTERNAL CONTRACT EXAMPLE:
   //
@@ -244,7 +244,7 @@ function App(props) {
 
   // Then read your DAI balance like:
   const myMainnetDAIBalance = useContractReader(mainnetContracts, "DAI", "balanceOf", [
-    "0x34aA3F359A9D614239015126635CE7732c18fDF3",
+    "0xEA5A52f732BE2eCD218224f896431660FBa8512D",
   ]);
 
   // keep track of a variable from the contract in the local React state:
@@ -522,14 +522,14 @@ function App(props) {
               Mumbai LSP
             </Link>
           </Menu.Item>
-          <Menu.Item key="/subgraph">
+          <Menu.Item key="/BOREDPUNKS">
             <Link
               onClick={() => {
-                setRoute("/subgraph");
+                setRoute("/BOREDPUNKS");
               }}
-              to="/subgraph"
+              to="/BOREDPUNKS"
             >
-              Subgraph
+              BOREDPUNKS
             </Link>
           </Menu.Item>
         </Menu>
@@ -625,12 +625,13 @@ function App(props) {
               chainId={80001}
             />
           </Route>
-          <Route path="/subgraph">
-            <Subgraph
-              subgraphUri={props.subgraphUri}
+          <Route path="/BOREDPUNKS">
+            <BoredPunks
+              address={address}
               tx={tx}
-              writeContracts={writeContracts}
               mainnetProvider={mainnetProvider}
+              readContracts={readContracts}
+              writeContracts={writeContracts}
             />
           </Route>
         </Switch>
