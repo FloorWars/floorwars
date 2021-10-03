@@ -244,7 +244,19 @@ function App(props) {
 
   // Then read your DAI balance like:
   const myMainnetDAIBalance = useContractReader(mainnetContracts, "DAI", "balanceOf", [
-    "0xEA5A52f732BE2eCD218224f896431660FBa8512D",
+    address
+  ]);
+
+  const usdcBalance = useContractReader(mainnetContracts, "USDC", "balanceOf", [
+    address
+  ]);
+
+  const shortBalance = useContractReader(mainnetContracts, "SHORT", "balanceOf", [
+    address
+  ]);
+
+  const longBalance = useContractReader(mainnetContracts, "LONG", "balanceOf", [
+    address
   ]);
 
   // keep track of a variable from the contract in the local React state:
@@ -284,6 +296,7 @@ function App(props) {
       console.log("🌍 DAI contract on mainnet:", mainnetContracts);
       console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
       console.log("🔐 writeContracts", writeContracts);
+      console.log(" usdcBalance", usdcBalance)
     }
   }, [
     mainnetProvider,
@@ -628,6 +641,9 @@ function App(props) {
           <Route path="/BOREDPUNKS">
             <BoredPunks
               address={address}
+              usdcBalance={usdcBalance}
+              longBalance={longBalance}
+              shortBalance={shortBalance}
               tx={tx}
               mainnetProvider={mainnetProvider}
               readContracts={readContracts}

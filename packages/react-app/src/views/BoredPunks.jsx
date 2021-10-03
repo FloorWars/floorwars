@@ -7,6 +7,9 @@ import { useContractReader } from "eth-hooks"
 
 export default function BoredPunks({
   address,
+  usdcBalance,
+  longBalance,
+  shortBalance,
   tx,
   mainnetProvider,
   readContracts,
@@ -15,6 +18,9 @@ export default function BoredPunks({
   const [amount, setNewAmount] = useState(0);
   const [longAmount, setLongAmount] = useState(0);
   const [shortAmount, setShortAmount] = useState(0);
+
+  const formattedLong = longBalance / (10**6)
+  const formattedShort = shortBalance / (10**6)
 
 
   return (
@@ -82,7 +88,6 @@ export default function BoredPunks({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
-              window.location.reload(true)
             }}
           >
             Create Synths!
@@ -112,12 +117,8 @@ export default function BoredPunks({
           </Button>
 
         </div>
-        <span>USDC Balance: </span>
-        </div>
+        <span>USDC Balance: {usdcBalance.toString()}</span>
 
-        <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-          <h4>Settle Amounts (USDC) :</h4>
-          <Divider />
           <div style={{ margin: 8 }}>
             <Input
               onChange={e => {
@@ -160,6 +161,9 @@ export default function BoredPunks({
               Settle
             </Button>
           </div>
+          <span>SHORT Balance: {formattedShort.toString()}</span>
+          <br></br>
+          <span>Long Balance: {formattedLong.toString()}</span>
         </div>
     </div>
   );
