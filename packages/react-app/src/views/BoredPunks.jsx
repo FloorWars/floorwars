@@ -2,7 +2,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import { utils } from "ethers";
 import { Button, Card, DatePicker, Divider, Input, List, Progress, Slider, Spin, Switch } from "antd";
 import React, { useState } from "react";
-import { Address, Balance } from "../components";
+import { Address, Balance, AvailableCollateral } from "../components";
 import { useContractReader } from "eth-hooks"
 
 export default function BoredPunks({
@@ -21,6 +21,7 @@ export default function BoredPunks({
 
   const formattedLong = longBalance / (10**6)
   const formattedShort = shortBalance / (10**6)
+  const formattedBalance = usdcBalance / (10**6)
 
 
   return (
@@ -29,6 +30,8 @@ export default function BoredPunks({
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
+        <AvailableCollateral address = {address} />
+
         <h2>BoredPunks:</h2>
         <h4>Collateral Amount (USDC) :</h4>
         <Divider />
@@ -47,7 +50,6 @@ export default function BoredPunks({
               let modAmount
               let colPair = await readContracts.LSP.collateralPerPair()
               colPair = colPair / (10**12)
-
 
               if(amount === 0) {
                 let lspAddress = readContracts.LSP.address
@@ -117,7 +119,7 @@ export default function BoredPunks({
           </Button>
 
         </div>
-        <span>USDC Balance: {usdcBalance.toString()}</span>
+        <span>USDC Balance: {formattedBalance.toString()}</span>
 
           <div style={{ margin: 8 }}>
             <Input
@@ -137,8 +139,20 @@ export default function BoredPunks({
               onClick={async () => {
                 /* look how you call setPurpose on your contract: */
                 /* notice how you pass a call back for tx updates too */
-                let modLong = longAmout * (10**6)
-                let modShort = shortAmount * (10**6)
+                let modLong
+                let modShort
+
+                if (longAmount === 0) {
+                  modLong = longBalance
+                } else {
+                  modLong = longAmount * (10**6)
+                }
+                if (shortAmount ===0) {
+                  modShort = shortBalance
+                } else {
+                  modShort = shortAmount * (10**6)
+                }
+
                 const result = tx(writeContracts.LSP.settle(modLong, modShort), update => {
                   console.log("📡 Transaction Update:", update);
                   if (update && (update.status === "confirmed" || update.status === 1)) {
@@ -161,10 +175,12 @@ export default function BoredPunks({
               Settle
             </Button>
           </div>
-          <span>SHORT Balance: {formattedShort.toString()}</span>
+          <span>Short Balance: {formattedShort.toString()}</span>
           <br></br>
           <span>Long Balance: {formattedLong.toString()}</span>
         </div>
     </div>
+
+
   );
 }

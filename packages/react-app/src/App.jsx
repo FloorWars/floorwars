@@ -296,7 +296,6 @@ function App(props) {
       console.log("🌍 DAI contract on mainnet:", mainnetContracts);
       console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
       console.log("🔐 writeContracts", writeContracts);
-      console.log(" usdcBalance", usdcBalance)
     }
   }, [
     mainnetProvider,
